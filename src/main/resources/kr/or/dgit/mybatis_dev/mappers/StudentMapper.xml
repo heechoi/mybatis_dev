@@ -14,9 +14,65 @@
 		</where>
 	
 	</sql> -->
+	<sql id="insertSql">
+		insert into students(stud_id, name, email, dob, phone)
+		values(#{studId},#{name},#{email},#{dob},#{phone})
+	</sql>
+	
+	<sql id="updateSql">
+		update students set name=#{name}, email=#{email}, phone=#{phone}, dob=#{dob}
+		where stud_id = #{studId}
+	</sql>
+	
+	<sql id="deleteSql">
+		delete from students where stud_id = #{studId}
+	</sql>
 	
 	<select id="selectStudentByNo" parameterType="Student" resultType="Student">
 		<include refid="selectSql"/>
 		where stud_id=#{studId}
 	</select>
+	
+	<select id="selectStudentByAll" resultType="Student">
+		<include refid="selectSql"></include>
+	</select>
+	
+	<select id="selectStudentByNoWithAPI" parameterType="Student" resultType="Student">
+		<include refid="selectSql"></include>
+		where stud_id=#{studId}
+	</select>
+	
+	<select id="selectStudentByAllWithAPI" resultType="Student">
+		<include refid="selectSql"></include>
+	</select>
+	
+	<insert id="insertStudent" parameterType="Student">
+		<include refid="insertSql"></include>
+	</insert>
+	
+	<insert id="insertStudnetWithAPI" parameterType="Student">
+		<include refid="insertSql"></include>
+	</insert>
+	
+	<insert id="insertStudentAutoInc" parameterType="Student" useGeneratedKeys = "true" keyProperty="studId">
+		<include refid="insertSql"></include>
+	</insert>
+	
+	<update id="updateStudent">
+		<include refid="updateSql"></include>
+	</update>
+	
+	<update id="updateStudentwithAPI">
+		<include refid="updateSql"></include>
+	</update>
+	
+	<delete id="deleteStudent">
+		<include refid="deleteSql"></include>
+	</delete>
+	
+	<delete id="deleteStudentWithAPI">
+		<include refid="deleteSql"></include>
+	</delete>
+	
+	
 </mapper>

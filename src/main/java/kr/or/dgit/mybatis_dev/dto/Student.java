@@ -1,8 +1,8 @@
 package kr.or.dgit.mybatis_dev.dto;
 
-import java.sql.Date;
+/*import java.sql.Date;*/
 
-/*import java.util.Date;*/
+import java.util.Date;
 
 public class Student {
 	private int studId;
@@ -13,6 +13,21 @@ public class Student {
 	public int getStudId() {
 		return studId;
 	}
+	
+	
+	public Student() {}
+
+
+	public Student(int studId, String name, String email, PhoneNumber phone, Date dob) {
+		super();
+		this.studId = studId;
+		this.name = name;
+		this.email = email;
+		this.phone = phone;
+		this.dob = dob;
+	}
+
+
 	public void setStudId(int studId) {
 		this.studId = studId;
 	}

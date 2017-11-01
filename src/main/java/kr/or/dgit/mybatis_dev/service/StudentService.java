@@ -1,5 +1,7 @@
 package kr.or.dgit.mybatis_dev.service;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 
 import kr.or.dgit.mybatis_dev.dao.StudentDao;
@@ -14,4 +16,120 @@ public class StudentService {
 			return dao.selectStudentByNo(student);
 		}
 	}
+	
+	public List<Student> findStudentByAll(){
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession()){
+			StudentDao dao = new StudentDaoImpl(sqlSession);
+			return dao.selectStudentByAll();
+		}
+	}
+	public Student findStudentAPI(Student student) {
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession()){
+			StudentDao studentDao = new StudentDaoImpl(sqlSession);
+			return studentDao.selectStudentByNoWithAPI(student);
+		}
+	}
+	
+	public List<Student> findStudentByAllAPI() {
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession()){
+			StudentDao studentDao = new StudentDaoImpl(sqlSession);
+			return studentDao.selectStudentByAllWithAPI();
+		}
+	}
+	//insert문
+	public int insertStudent(Student student) {
+		int res = -1;
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession()){
+			StudentDao studentDao = new StudentDaoImpl(sqlSession);
+			res = studentDao.insertStudent(student);
+			sqlSession.commit();
+		}
+		return res;
+	}
+	public int insertStudentWithAPI(Student student) {
+		int res = -1;
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession()){
+			StudentDao studentDao = new StudentDaoImpl(sqlSession);
+			res = studentDao.insertStudnetWithAPI(student);
+			sqlSession.commit();
+		}
+		return res;
+	}
+	
+	//update 문
+	public int updateStudent(Student student) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();
+		try {
+			StudentDao studentDao = new StudentDaoImpl(sqlSession);
+			int res = studentDao.updateStudent(student);
+			sqlSession.commit();
+			return res;
+		}catch(Exception e){
+			sqlSession.rollback();
+			e.printStackTrace();
+			throw new RuntimeException(e.getCause());
+		}finally {
+			sqlSession.close();
+		}
+	}
+	
+	public int updateStudentWithAPI(Student student) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();
+		try {
+			StudentDao studentDao = new StudentDaoImpl(sqlSession);
+			int res = studentDao.updateStudentwithAPI(student);
+			sqlSession.commit();
+			return res;
+		}catch(Exception e){
+			sqlSession.rollback();
+			e.printStackTrace();
+			throw new RuntimeException(e.getCause());
+		}finally {
+			sqlSession.close();
+		} 
+	}
+	
+	public int deleteStudent(int id) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();
+		try {
+			StudentDao studentDao = new StudentDaoImpl(sqlSession);
+			int res = studentDao.deleteStudent(id);
+			sqlSession.commit();
+			return res;
+		}catch(Exception e){
+			sqlSession.rollback();
+			e.printStackTrace();
+			throw new RuntimeException(e.getCause());
+		}finally {
+			sqlSession.close();
+		}
+	
+	}
+	
+	public int deleteStudentWithAPI(int id) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();
+		try {
+			StudentDao studentDao = new StudentDaoImpl(sqlSession);
+			int res = studentDao.deleteStudentWithAPI(id);
+			sqlSession.commit();
+			return res;
+		}catch(Exception e){
+			sqlSession.rollback();
+			e.printStackTrace();
+			throw new RuntimeException(e.getCause());
+		}finally {
+			sqlSession.close();
+		}
+	}
+	
+	public int insertStudentAutoInc(Student student) {
+		int res =-1;
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession()){
+			StudentDao studentDao = new StudentDaoImpl(sqlSession);
+			res = studentDao.insertStudentAutoInc(student);
+			sqlSession.commit();
+		}
+		return res;
+	}
+	
 }
