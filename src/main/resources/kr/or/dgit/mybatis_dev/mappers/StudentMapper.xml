@@ -6,14 +6,15 @@
 		from students
 	</sql>
 	
-<!-- 	<sql id="whereSql">
+ 	<sql id="whereSql">
 		<where>
-			<if test="studId !null">
+			<if test="studId !=null">
 				stud_id=#{studId}
 			</if>
 		</where>
 	
-	</sql> -->
+	</sql> 
+	
 	<sql id="insertSql">
 		insert into students(stud_id, name, email, dob, phone)
 		values(#{studId},#{name},#{email},#{dob},#{phone})
@@ -74,5 +75,62 @@
 		<include refid="deleteSql"></include>
 	</delete>
 	
+	<!-- resultmap -->
+	<resultMap type="Student" id="StudentResult">
+		<id property="studId" column="stud_id"/>
+		<result property="name" column="name"/>
+		<result property="email" column="email"/>
+		<result property="phone" column="phone"/>
+		<result property="dob" column="dob"/>
+	</resultMap>
 	
+	<select id="selectStudentByAllForResultMap"	resultMap="StudentResult">
+		<include refid="selectSql"></include>
+	</select>
+	
+	<select id="selectStudentByAllForResultMapWithAPI" resultMap="StudentResult">
+		<include refid="selectSql"></include>
+	</select>
+	
+	<!--hashMap-->
+	<select id="selectStudentByAllForHashMap" resultType="map">
+		<include refid="selectSql"></include>
+	</select>
+	
+	<select id="selectStudentByAllForHashMapWithAPI" resultType="map">
+		<include refid="selectSql"></include>
+	</select>
+	
+	<!-- 결과매핑확장 -->
+	<!-- <resultMap type="Student" id="StudentResult">
+		<id property="studId" column="stud_id"/>
+		<result property="name" column="name"/>
+		<result property="email" column="email"/>
+		<result property="phone" column="phone"/>
+		<result property="dob" column="dob"/>
+	</resultMap> -->
+	
+	<resultMap type="Student" id="StudentWithAddressResult"	extends="StudentResult">
+		<result property="address.addrId" column="addr_id"/>
+		<result property="address.street" column="street"/>
+		<result property="address.city" column ="city"/>
+		<result property="address.state" column ="state"/>
+		<result property="address.zip" column="zip"/>
+		<result property="address.country" column="country"/>
+	</resultMap>
+	
+	<sql id="selectJoinAddressSql">
+		 SELECT STUD_ID, NAME, EMAIL, PHONE, A.ADDR_ID, STREET, CITY, STATE, ZIP, COUNTRY
+        FROM STUDENTS S LEFT OUTER JOIN ADDRESSES A ON S.ADDR_ID=A.ADDR_ID
+	</sql>
+	
+	<select id="selectStudentByNoForResultMapExtends" parameterType="Student" resultMap="StudentWithAddressResult">
+		<include refid="selectJoinAddressSql"></include>
+			<include refid="whereSql"></include>
+	</select>
+	
+	<select id="selectStudentByNoForResultMapExtendsWithAPI" parameterType="Student" resultMap="StudentWithAddressResult">
+		<include refid="selectJoinAddressSql"></include>
+		<include refid="whereSql"></include>
+	</select>
 </mapper>

@@ -1,7 +1,5 @@
 package kr.or.dgit.mybatis_dev.dto;
 
-/*import java.sql.Date;*/
-
 import java.util.Date;
 
 public class Student {
@@ -10,16 +8,13 @@ public class Student {
 	private String email;
 	private PhoneNumber phone;
 	private Date dob;
-	public int getStudId() {
-		return studId;
+	private Address address;
+	
+	public Student() {
+		// TODO Auto-generated constructor stub
 	}
 	
-	
-	public Student() {}
-
-
 	public Student(int studId, String name, String email, PhoneNumber phone, Date dob) {
-		super();
 		this.studId = studId;
 		this.name = name;
 		this.email = email;
@@ -27,41 +22,49 @@ public class Student {
 		this.dob = dob;
 	}
 
+	public int getStudId() {
+		return studId;
+	}
 
 	public void setStudId(int studId) {
 		this.studId = studId;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public PhoneNumber getPhone() {
 		return phone;
 	}
+
 	public void setPhone(PhoneNumber phone) {
 		this.phone = phone;
 	}
+
 	public Date getDob() {
 		return dob;
 	}
+
 	public void setDob(Date dob) {
 		this.dob = dob;
 	}
-	
+
 	@Override
 	public String toString() {
-		return String.format("Student [%s %s %s %s %s]", studId, name, email, phone, dob);
+		return String.format("Student [%s %s %s %s %s, %s]", studId, name, email, phone, dob, address);
 	}
-	
-	
-	
-	
+
 }

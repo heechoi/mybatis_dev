@@ -1,9 +1,7 @@
 package kr.or.dgit.mybatis_dev.service;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -12,7 +10,6 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import kr.or.dgit.mybatis_dev.dto.PhoneNumber;
 import kr.or.dgit.mybatis_dev.dto.Student;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -30,7 +27,7 @@ public class TestStudentService {
 		studentService = null;
 	}
 
-	@Test
+/*	@Test
 	public void test1FindStudentByNo() {
 		Student student = new Student();
 		student.setStudId(1);
@@ -56,9 +53,9 @@ public class TestStudentService {
 	public void test4FindStudentByAllAPI() {
 		List<Student> lists=studentService.findStudentByAllAPI();
 		Assert.assertNotNull(lists);
-	}
+	}*/
 	
-	@Test
+/*	@Test
 	public void test5insertStudent() {
 		Calendar newDate = GregorianCalendar.getInstance();
 		newDate.set(1990, 2, 28);
@@ -120,6 +117,29 @@ public class TestStudentService {
 		
 		int res = studentService.insertStudentAutoInc(student);
 		Assert.assertEquals(1, res);
-	}
+	}*/
 	
+/*	@Test
+	public void gTestSelectStudentByAllForResultMap() {
+		List<Student> lists = studentService.findStudentByAllForResultMap();
+		List<Student> listsAPI = studentService.findStudentByAllForResultMapWithAPI();
+		Assert.assertEquals(listsAPI.size(), lists.size());
+	}*/
+	
+/*	@Test
+	public void gTestSelectStudentByAllForHashMap() {
+		List<Map<String,Object>> lists = studentService.findStudentByAllForHashMap();
+		List<Map<String,Object>> listsAPI = studentService.findStudentByAllForHashMapWithAPI();
+		Assert.assertEquals(listsAPI, lists);
+	}*/
+	
+	@Test
+	public void testSelectStudentByNoForResultMapExtends() {
+		Student student = new Student();
+		student.setStudId(1);
+		
+		Student extStd = studentService.findStudentByNoForResultMapExtends(student);
+		Student exStdAPI = studentService.findStudentByNoForResultMapExtendsWithAPI(student);
+		Assert.assertEquals(extStd.getStudId(), exStdAPI.getStudId());
+	}
 }
