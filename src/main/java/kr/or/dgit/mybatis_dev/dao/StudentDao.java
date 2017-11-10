@@ -32,4 +32,16 @@ public interface StudentDao {
 	
 	Student selectStudentByNoForResultMapExtends(Student student);
 	Student selectStudentByNoForResultMapExtendsWithAPI(Student student);
+	
+	Student selectStudentByNoAssociation(Student student);
+	Student selectStudentByNoAssociationAPI(Student student);
+	
+	int insertEnumStudent(Student student);
+	int insertEnumStudentWithAPI(Student student);
+	
+	Student selectAllStudentByParam(String name,String email);
+	Student selectAllStudentByStudent(Student student);
+	Student selectAllStudentByMap(Map<String, String> map);
+	
+	int updateSetStudent(Student student);
 }

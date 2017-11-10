@@ -1,7 +1,7 @@
 package kr.or.dgit.mybatis_dev.service;
 
-import java.util.List;
-import java.util.Map;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -10,6 +10,7 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+import kr.or.dgit.mybatis_dev.dto.PhoneNumber;
 import kr.or.dgit.mybatis_dev.dto.Student;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -133,7 +134,7 @@ public class TestStudentService {
 		Assert.assertEquals(listsAPI, lists);
 	}*/
 	
-	@Test
+/*	@Test
 	public void testSelectStudentByNoForResultMapExtends() {
 		Student student = new Student();
 		student.setStudId(1);
@@ -141,5 +142,81 @@ public class TestStudentService {
 		Student extStd = studentService.findStudentByNoForResultMapExtends(student);
 		Student exStdAPI = studentService.findStudentByNoForResultMapExtendsWithAPI(student);
 		Assert.assertEquals(extStd.getStudId(), exStdAPI.getStudId());
+	}*/
+	
+/*	@Test
+	public void testSelectStudentByNoAssociation(){
+		Student student = new Student();
+		student.setStudId(1);
+		
+		Student extStd = studentService.findStudentByNoAssociation(student);
+		Student extStdAPI = studentService.findStudentByNoAssociationWithAPI(student);
+		
+		Assert.assertEquals(extStd.getStudId(), extStdAPI.getStudId());
+	}*/
+
+/*	@Test
+	public void testInsertEnumStudent() {
+		Calendar newDate = GregorianCalendar.getInstance();
+		newDate.set(1990, 2,28);
+		Student student = new Student();
+		student.setName("test");
+		student.setEmail("test@test.co.kr");
+		student.setDob(newDate.getTime());
+		student.setPhone(new PhoneNumber("010-1234-1234"));
+		student.setGender(Gender.FMALE);
+		int res= studentService.insertEnumStudent(student);
+		Assert.assertEquals(1, res);
+	}
+	
+	@Test
+	public void testInsertEnumStudentWithAPI() {
+		Calendar newDate = GregorianCalendar.getInstance();
+		newDate.set(1990, 3,28);
+		Student student = new Student();
+		student.setName("test2");
+		student.setEmail("test2@test.co.kr");
+		student.setDob(newDate.getTime());
+		student.setPhone(new PhoneNumber("010-1234-1234"));
+		student.setGender(Gender.MALE);
+		int res= studentService.insertEnumStudentWithAPI(student);
+		Assert.assertEquals(1, res);
+	}*/
+/*	@Test
+	public void testAFindAllStudentByParam() {
+		Student student = studentService.findAllStudentByParam("Timothy", "timothy@gmail.com");
+		Assert.assertNotNull(student);
+	}
+	@Test
+	public void testBStudentByStudent() {
+		Student std = new Student();
+		std.setName("Timothy");
+		std.setEmail("timothy@gmail.com");
+		Student student = studentService.findAllStudentByStudent(std);
+		Assert.assertNotNull(student);
+	}
+	@Test
+	public void testCStudentByMap() {
+		Map<String,String> maps = new HashMap<>();
+		maps.put("name", "Timothy");
+		maps.put("email", "timothy@gmail.com");
+		Student student = studentService.findAllStudentByMap(maps);
+		Assert.assertNotNull(student);
+	}*/
+	
+	@Test
+	public void testUpdateSetStudent() {
+		Student student = new Student();
+		student.setStudId(1);
+		student.setPhone(new PhoneNumber("987-654-3211"));
+		student.setDob(new Date());
+		
+		int result = studentService.updateSetStudent(student);
+		Assert.assertSame(1, result);
+		
+		student.setPhone(new PhoneNumber("123-123-1234"));
+		student.setDob(new GregorianCalendar(1988,04,25).getTime());
+		result= studentService.updateSetStudent(student);
+		Assert.assertSame(1, result);
 	}
 }

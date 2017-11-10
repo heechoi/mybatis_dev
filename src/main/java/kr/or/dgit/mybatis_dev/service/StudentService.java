@@ -177,4 +177,76 @@ public class StudentService {
 			return studentDao.selectStudentByNoForResultMapExtendsWithAPI(student);
 		}
 	}
+	
+	//일대일 매핑
+	public Student findStudentByNoAssociation(Student student) {
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession()){
+			StudentDao studentDao = new StudentDaoImpl(sqlSession);
+			return studentDao.selectStudentByNoAssociation(student);
+		}
+	}
+	
+	public Student findStudentByNoAssociationWithAPI(Student student) {
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession()){
+			StudentDao studentDao = new StudentDaoImpl(sqlSession);
+			return studentDao.selectStudentByNoAssociationAPI(student);
+		}
+	}
+	
+	
+	public int insertEnumStudent(Student student) {
+		int res=-1;
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession()){
+			StudentDao studentDao = new StudentDaoImpl(sqlSession);
+			res = studentDao.insertEnumStudent(student);
+			sqlSession.commit();
+		}
+		return res;
+	}
+	
+	public int insertEnumStudentWithAPI(Student student) {
+		int res=-1;
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession()){
+			StudentDao studentDao = new StudentDaoImpl(sqlSession);
+			res=studentDao.insertEnumStudentWithAPI(student);
+			sqlSession.commit();
+		}
+		return res;
+	}
+	
+	public Student findAllStudentByParam(String name, String email) {
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession()){
+			StudentDao studentDao = new StudentDaoImpl(sqlSession);
+			return studentDao.selectAllStudentByParam(name, email);
+		}
+	}
+	
+	public Student findAllStudentByStudent(Student student) {
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession()){
+			StudentDao studentDao = new StudentDaoImpl(sqlSession);
+			return studentDao.selectAllStudentByStudent(student);
+		}
+	}
+	public Student findAllStudentByMap(Map<String,String> map) {
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession()){
+			StudentDao studentDao = new StudentDaoImpl(sqlSession);
+			return studentDao.selectAllStudentByMap(map);
+		}
+	}
+	
+	public int updateSetStudent(Student student) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlSessionFactory().openSession();
+		try {
+			StudentDao studentDao = new StudentDaoImpl(sqlSession);
+			int res = studentDao.updateSetStudent(student);
+			sqlSession.commit();
+			return res;
+		}catch(Exception e) {
+			sqlSession.rollback();
+			e.printStackTrace();
+			throw new RuntimeException(e.getCause());
+		}finally {
+			sqlSession.close();
+		}
+	}
 }

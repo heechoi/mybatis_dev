@@ -120,4 +120,52 @@ public class StudentDaoImpl implements StudentDao {
 		return sqlSession.selectOne(namespace+"selectStudentByNoForResultMapExtendsWithAPI",student);
 	}
 
+	@Override
+	public Student selectStudentByNoAssociation(Student student) {
+		log.debug("selectStudentByNoAssociation()");
+		return sqlSession.getMapper(StudentDao.class).selectStudentByNoAssociation(student);
+	}
+
+	@Override
+	public Student selectStudentByNoAssociationAPI(Student student) {
+		log.debug("selectStudentByNoAssociationAPI()");
+		return sqlSession.selectOne(namespace+"selectStudentByNoAssociationAPI",student);
+	}
+
+	@Override
+	public int insertEnumStudent(Student student) {
+		log.debug("insertEnumStudent()");
+		return sqlSession.getMapper(StudentDao.class).insertEnumStudent(student);
+	}
+
+	@Override
+	public int insertEnumStudentWithAPI(Student student) {
+		log.debug("insertEnumStudentWithAPI()");
+		return sqlSession.insert(namespace+"insertEnumStudentWithAPI",student);
+	}
+
+	@Override
+	public Student selectAllStudentByParam(String name, String email) {
+		log.debug("selectAllStudentByParam()");
+		return sqlSession.getMapper(StudentDao.class).selectAllStudentByParam(name, email);
+	}
+
+	@Override
+	public Student selectAllStudentByStudent(Student student) {
+		log.debug("selectAllStudentByStudent()");
+		return sqlSession.selectOne(namespace+"selectAllStudentByStudent",student);
+	}
+
+	@Override
+	public Student selectAllStudentByMap(Map<String, String> map) {
+		log.debug("selectAllStudentByMap()");
+		return sqlSession.selectOne(namespace+"selectAllStudentByMap",map);
+	}
+
+	@Override
+	public int updateSetStudent(Student student) {
+		log.debug("updateSetStudent()");
+		return sqlSession.update(namespace+"updateSetStudent",student);
+	}
+
 }

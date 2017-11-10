@@ -133,4 +133,76 @@
 		<include refid="selectJoinAddressSql"></include>
 		<include refid="whereSql"></include>
 	</select>
+	
+	
+	<resultMap type="Student" id="StudentAssociation" extends = "StudentResult">
+		<association property="address" resultMap="kr.or.dgit.mybatis_dev.dao.AddressDao.AddressResult"></association>
+	</resultMap>
+	
+	<select id="selectStudentByNoAssociation" parameterType="Student" resultMap="StudentAssociation">
+		<include refid="selectJoinAddressSql"></include>
+		<include refid="whereSql"></include>
+	</select>
+	
+	<select id="selectStudentByNoAssociationAPI" parameterType="Student" resultMap="StudentAssociation">
+		<include refid="selectJoinAddressSql"></include>
+		<include refid="whereSql"></include>
+	</select>
+	
+	<sql id="insertEnumStudent">
+		INSERT INTO STUDENTS(STUD_ID, NAME, EMAIL, PHONE, DOB, GENDER)
+		VALUES(#{studId},#{name},#{email},#{phone},#{dob},#{gender})
+	</sql>
+	
+	<insert id="insertEnumStudent" parameterType="Student" useGeneratedKeys="true" keyProperty="studId">
+		<include refid="insertEnumStudent"></include>
+	</insert>
+	
+	<insert id="insertEnumStudentWithAPI" parameterType="Student" useGeneratedKeys="true" keyProperty="studId">
+		<include refid="insertEnumStudent"></include>
+	</insert>
+	
+	
+	
+	<resultMap type="Student" id="StudentGenderResult"  extends="StudentResult">
+    	<result property="gender" column="gender" />
+    </resultMap>
+	<sql id="selectParameterSql">
+        select stud_id, name, email, phone, dob, gender from students
+    </sql>
+    <sql id="whereNameEmailSql">
+        <where>
+            <if test="name != null">
+                name = #{name}
+            </if>
+            <if test="email != null">
+                AND email = #{email}
+            </if>
+        </where>
+    </sql>
+	<select id="selectAllStudentByParam" resultMap="StudentGenderResult">
+        <include refid="selectParameterSql"/>
+        where name=#{param1} and email=#{param2}
+    </select>
+    
+    <select id="selectAllStudentByStudent" parameterType="Student" resultMap="StudentGenderResult">
+        <include refid="selectParameterSql"/>
+        <include refid="whereNameEmailSql"/>
+    </select>
+
+    <select id="selectAllStudentByMap" parameterType="map" resultMap="StudentGenderResult">
+        <include refid="selectParameterSql"/>
+        <include refid="whereNameEmailSql"/>
+    </select>
+    
+    <update id="updateSetStudent">
+    	update students
+    	<set>
+    		<if test="name !=null">name=#{name},</if>
+    		<if test="email !=null">email=#{email},</if>
+    		<if test="phone !=null">phone=#{phone},</if>
+    		<if test="dob !=null">dob=#{dob}</if>
+    	</set>
+    	<include refid="whereSql"/>
+    </update>
 </mapper>
